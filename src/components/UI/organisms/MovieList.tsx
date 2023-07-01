@@ -1,20 +1,55 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useMemo, useEffect } from "react";
+import React, {
+  useState,
+  useLayoutEffect,
+  useRef,
+  useMemo,
+  useEffect,
+} from "react";
 import { Box, CardActionArea, Grid } from "@mui/material";
 import useChunkedData from "../../../hooks/useChunkedData";
 import { Movie } from "../../../types";
 import MovieItem from "../molecules/MovieItem";
+import MovieDetailCard from "../molecules/MovieDetail";
+import Content from "../molecules/animation/Content";
+import Container from "../molecules/animation/Container";
 import { useMediaQuery } from "@mui/material";
+import {
+  smoothScroll,
+  getScrollOffset,
+  isMobileDevice,
+} from "../../../utils/scrollUtils";
 
 interface MovieListProps {
   movies: Movie[];
 }
 
+interface Position {
+  x: number;
+  y: number;
+}
+
 const MovieList: React.FC<MovieListProps> = ({ movies }) => {
+  const [animation, setAnimation] = useState({
+    animate: false,
+    shrink: false,
+    showContent: false,
+  });
   const [selected, setSelected] = useState<{
     row: number | null;
     item: number | null;
   }>({ row: null, item: null });
+
+  const [clickedPosition, setClickedPosition] = useState<Position | null>(null);
+  const [height, setHeight] = useState(0);
+  const previousClick = useRef<{ row: number | null; item: number | null }>({
+    row: null,
+    item: null,
+  });
+  const [previousRow, setPreviousRow] = useState<number | null>(null);
+
+  const heightRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
 
   const isXs = useMediaQuery("(max-width:599px)");
   const isSm = useMediaQuery("(max-width:899px)");
@@ -33,6 +68,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   }, [isXs, isSm, isMd, isLg]);
 
   const data = useChunkedData(movies, chunkSize);
+  console.log(data);
 
   const [previousChunkSize, setPreviousChunkSize] = useState(chunkSize);
 
@@ -43,19 +79,189 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     setPreviousChunkSize(chunkSize);
   }, [chunkSize, previousChunkSize]);
 
+  const updateCurrentSelection = (rowIndex: number, itemIndex: number) => {
+    previousClick.current = { row: rowIndex, item: itemIndex };
+
+    if (previousRow !== rowIndex) {
+      setAnimation((prevState) => ({ ...prevState, showContent: false }));
+    }
+
+    setPreviousRow(rowIndex);
+  };
+
+  const isNewSelection = (rowIndex: number, itemIndex: number) => {
+    return (
+      previousClick.current.row === null ||
+      previousClick.current.item === null ||
+      previousClick.current.row !== rowIndex ||
+      previousClick.current.item !== itemIndex
+    );
+  };
+
+  const prepareForNewSelection = () => {
+    setAnimation((prevState) => ({
+      ...prevState,
+      animate: true,
+      shrink: false,
+    }));
+    setHeight(0);
+  };
+
+  const expandSelection = () => {
+    setAnimation((prevState) => ({
+      ...prevState,
+      animate: true,
+      shrink: false,
+      showContent: false,
+    }));
+    setHeight(heightRef.current?.offsetHeight || 0);
+  };
+
+  const collapseSelection = () => {
+    setAnimation((prevState) => ({
+      ...prevState,
+      animate: false,
+      shrink: true,
+      showContent: false,
+    }));
+    setHeight(0);
+  };
+
+  const handleSameSelection = () => {
+    if (animation.shrink) {
+      expandSelection();
+    } else {
+      collapseSelection();
+    }
+  };
+
   const handleClick = (
     rowIndex: number,
     itemIndex: number,
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    console.log(rowIndex, itemIndex);
+    if (isNewSelection(rowIndex, itemIndex)) {
+      prepareForNewSelection();
+    } else {
+      handleSameSelection();
+      setClickedPosition({ x: event.clientX, y: event.clientY });
+    }
+
+    updateCurrentSelection(rowIndex, itemIndex);
+    setSelected({ row: rowIndex, item: itemIndex });
   };
+
+  const handleAnimationComplete = () => {
+    if (!animation.shrink) {
+      setAnimation((prevState) => ({ ...prevState, showContent: true }));
+    }
+  };
+
+  useLayoutEffect(() => {
+    const heightRefCurrent = heightRef.current;
+
+    const updateHeight = () => {
+      if (heightRefCurrent) {
+        setHeight(heightRefCurrent.offsetHeight);
+      }
+    };
+
+    updateHeight();
+
+    window.addEventListener("resize", updateHeight);
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [selected, heightRef.current]);
+
+  useEffect(() => {
+    const scrollToBox = () => {
+      if (!boxRef.current) return;
+
+      const rect = boxRef.current.getBoundingClientRect();
+      const targetTop =
+        rect.top + getScrollOffset() - (isMobileDevice() ? 50 : 200);
+      smoothScroll(targetTop);
+    };
+
+    if (selected.row !== null) {
+      scrollToBox();
+    }
+  }, [selected.row]);
+
+  useEffect(() => {
+    const scrollToClickedPosition = () => {
+      if (
+        clickedPosition &&
+        boxRef.current &&
+        animation.shrink &&
+        isMobileDevice()
+      ) {
+        const rect = boxRef.current.getBoundingClientRect();
+        const targetTop = rect.top + getScrollOffset() + 600;
+        const scrollToY = targetTop - clickedPosition.y;
+        smoothScroll(scrollToY);
+        setClickedPosition(null);
+      }
+    };
+
+    if (clickedPosition) {
+      scrollToClickedPosition();
+    }
+  }, [clickedPosition]);
 
   return (
     <>
       {data?.map((movies, rowIndex) => (
         <Box key={rowIndex}>
-          <Grid container spacing={3} alignItems="stretch">
+          {selected.row === rowIndex && selected.item !== null && (
+            <Box
+              ref={boxRef}
+              sx={{
+                height: animation.shrink ? "0px" : `${height}px`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition:
+                  selected.row === rowIndex ? "1s ease-out" : "0.6s ease-in",
+                transitionDelay: animation.shrink ? "0.8s" : "0s",
+                marginBottom: animation.shrink ? "0px" : "40px",
+                position: "relative",
+                overflow: "hidden",
+              }}
+              onTransitionEnd={() => {
+                if (!animation.animate) setSelected({ ...selected, row: null });
+              }}
+            >
+              <Container
+                animate={animation.animate}
+                shrink={animation.shrink}
+                onAnimationEnd={handleAnimationComplete}
+              >
+                <Content
+                  animate={animation.animate}
+                  animation="fadeIn"
+                  delay={1.4}
+                >
+                  <Box ref={heightRef}>
+                    <MovieDetailCard
+                      movie={data[rowIndex][selected.item]}
+                      animate={animation.showContent}
+                    />
+                  </Box>
+                </Content>
+              </Container>
+            </Box>
+          )}
+          <Grid
+            container
+            spacing={3}
+            alignItems="stretch"
+            sx={{
+              transition: animation.animate ? "0.6s ease-in" : "0px",
+            }}
+          >
             {movies.map((movie, itemIndex) => (
               <Grid
                 item
@@ -67,7 +273,15 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
                 key={movie.Title}
               >
                 <CardActionArea
-                  sx={{ borderRadius: "11px" }}
+                  sx={{
+                    border:
+                      selected.item === itemIndex &&
+                      selected.row === rowIndex &&
+                      !animation.shrink
+                        ? "3px solid #00E0FF"
+                        : "0px",
+                    borderRadius: "11px",
+                  }}
                   onClick={(e) => handleClick(rowIndex, itemIndex, e)}
                 >
                   <MovieItem key={movie.Title} movie={movie} />

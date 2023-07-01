@@ -32,7 +32,7 @@ const SidebarItem = ({ item }: Props) => {
         paddingX: "40px",
         color: colorConfigs.secondaryText,
         fontWeight: 600,
-        fontSize: "15px",
+        fontSize: { md: 15, xs: 14 },
       }}
       selected={item.path === location.pathname}
     >
