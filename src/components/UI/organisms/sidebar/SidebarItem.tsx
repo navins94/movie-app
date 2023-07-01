@@ -28,7 +28,7 @@ const SidebarItem = ({ item }: Props) => {
         "& .MuiSvgIcon-root": {
           color: colorConfigs.secondaryText,
         },
-        paddingY: "8px",
+        paddingY: "6px",
         paddingX: "40px",
         color: colorConfigs.secondaryText,
         fontWeight: 600,
