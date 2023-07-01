@@ -194,9 +194,8 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
         isMobileDevice()
       ) {
         const rect = boxRef.current.getBoundingClientRect();
-        console.log(rect.top);
-        const targetTop = rect.top + getScrollOffset() + 600;
-        const scrollToY = targetTop - clickedPosition.y;
+        const targetTop = rect.top + rect.height / 2 - innerHeight / 2;
+        const scrollToY = targetTop + scrollY;
         smoothScroll(scrollToY);
         setClickedPosition(null);
       }

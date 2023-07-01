@@ -3,7 +3,7 @@ export const isMobileDevice = (): boolean => {
 };
 
 export const getScrollOffset = (): number => {
-  return window.pageYOffset;
+  return window.scrollY || window.pageYOffset;
 };
 
 export const smoothScroll = (targetTop: number) => {
