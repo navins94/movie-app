@@ -12,7 +12,6 @@ import ImageCarousel from "./ImageCarousel";
 import RatingProgressBar from "../atoms/RatingProgressBar";
 import ButtonComponent from "../atoms/Button";
 import Content from "./animation/Content";
-import { isMobileDevice } from "../../../utils/scrollUtils";
 
 interface MovieItemProps {
   movie: Movie;
@@ -52,7 +51,7 @@ const MovieDetailCard: React.FC<MovieItemProps> = ({ movie, animate }) => {
             flexDirection: "column",
             width: "100%",
             py: { sm: 1, md: 2 },
-            px: { sm: 2, md: 4 },
+            px: { sm: 2, md: 1, lg: 4 },
           }}
         >
           <CardContent sx={{ flex: "1 0 auto" }}>
@@ -126,21 +125,6 @@ const MovieDetailCard: React.FC<MovieItemProps> = ({ movie, animate }) => {
                 >
                   Watch Trailer
                 </ButtonComponent>
-                {isMobileDevice() && (
-                  <ButtonComponent
-                    variant="outlined"
-                    sx={{
-                      fontWeight: 800,
-                      textTransform: "capitalize",
-                      fontSize: 16,
-                      width: { xs: "100%", md: "10em" },
-                      color: "#e4e4e4",
-                      borderColor: "#e4e4e4",
-                    }}
-                  >
-                    Close
-                  </ButtonComponent>
-                )}
               </Box>
             </Box>
           </CardContent>

@@ -68,7 +68,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   }, [isXs, isSm, isMd, isLg]);
 
   const data = useChunkedData(movies, chunkSize);
-  console.log(data);
 
   const [previousChunkSize, setPreviousChunkSize] = useState(chunkSize);
 

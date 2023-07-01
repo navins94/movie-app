@@ -29,7 +29,7 @@ const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const theme = useTheme();
-  const isDesktopView = useMediaQuery(theme.breakpoints.up("md"));
+  const isDesktopView = useMediaQuery(theme.breakpoints.up("lg"));
 
   const drawerVariant = isDesktopView ? "permanent" : "temporary";
   const drawerDisplay = isDesktopView ? "none" : "block";
@@ -71,7 +71,9 @@ const Sidebar = () => {
         sx={{
           display: drawerDisplay,
           position: "fixed",
+          background: "#273244",
         }}
+        elevation={0}
       >
         <Toolbar
           sx={{
@@ -107,7 +109,7 @@ const Sidebar = () => {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { md: sizeConfigs.sidebar.width }, flexShrink: { sm: 0 } }}
+        sx={{ width: { lg: sizeConfigs.sidebar.width }, flexShrink: { sm: 0 } }}
         aria-label="movie routes"
       >
         <Drawer

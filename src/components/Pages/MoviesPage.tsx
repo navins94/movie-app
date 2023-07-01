@@ -23,7 +23,7 @@ const MoviesPage: React.FC = () => {
     <>
       <Box sx={{ py: 0, px: { xs: 0, sm: 1, md: 2 } }}>
         <Grid container spacing={4} alignItems="center">
-          <Grid item xs={12} sm={6} md={6} lg={6}>
+          <Grid item xs={12} sm={12} md={12} lg={6}>
             <SearchBar value={searchName} onChange={setSearchName} />
           </Grid>
           <Grid
@@ -32,7 +32,7 @@ const MoviesPage: React.FC = () => {
             sm={6}
             md={6}
             lg={6}
-            display={{ xs: "none", sm: "none", md: "initial", lg: "initial" }}
+            display={{ xs: "none", lg: "initial" }}
           >
             <Box display="flex" alignItems="center" justifyContent="flex-end">
               <IconButton>

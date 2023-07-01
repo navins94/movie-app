@@ -13,7 +13,7 @@ const MainLayout = () => {
       <Box
         component="main"
         sx={{
-          marginTop: { xs: "56px", sm: "56px", md: "0px", lg: "0px" },
+          marginTop: { xs: "56px", sm: "64px", md: "64px", lg: "0px" },
           flexGrow: 1,
           pt: 0,
           p: { xs: 2, md: 4, lg: 4 },

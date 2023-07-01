@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { InputAdornment, TextField, IconButton } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelRoundedIcon from "@mui/icons-material/Close";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface SearchProps {
   value: string;
@@ -9,11 +11,12 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({ value, onChange }) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up("lg"));
   const [active, setActive] = useState(false);
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.value);
   };
-
   return (
     <TextField
       id="search"
@@ -27,14 +30,17 @@ const Search: React.FC<SearchProps> = ({ value, onChange }) => {
         borderRadius: "4px",
         "& fieldset": { border: "none" },
         "& .MuiInputBase-root": {
-          width: active ? "100%" : "0px",
+          width: { sm: "100%", lg: active ? "100%" : "0px" },
           p: 0,
-          background: active ? "#1A2536" : "transparent",
+          backgroundColor: {
+            xs: "#1A2536",
+            lg: active ? "#1A2536" : "transparent",
+          },
           transition: "width 0.4s ease-out",
           borderRadius: "8px",
         },
         "& input": {
-          opacity: active ? 1 : 0,
+          opacity: { sm: 1, lg: active ? 1 : 0 },
           transition: "0.5s",
           transitionDelay: active ? "0.2s" : "0s",
         },
@@ -43,8 +49,8 @@ const Search: React.FC<SearchProps> = ({ value, onChange }) => {
           padding: "0px 10px 0px 10px",
         },
         "& .MuiButtonBase-root": {
-          visibility: active ? "visible" : "hidden",
-          opacity: active ? 1 : 0,
+          visibility: { sm: "visible", lg: active ? "visible" : "hidden" },
+          opacity: { sm: 1, lg: active ? 1 : 0 },
           transition: active ? "0.5s" : "0s",
           transitionDelay: active ? "0.4s" : "0s",
         },
@@ -59,15 +65,28 @@ const Search: React.FC<SearchProps> = ({ value, onChange }) => {
           </InputAdornment>
         ),
         endAdornment: (
-          <IconButton
-            aria-label="toggle password visibility"
-            onClick={() => {
-              onChange("");
-              setActive(!active);
-            }}
-          >
-            <CancelRoundedIcon sx={{ color: "#fff" }} />
-          </IconButton>
+          <>
+            {matches && (
+              <IconButton
+                onClick={() => {
+                  onChange("");
+                  setActive(!active);
+                }}
+              >
+                <CancelRoundedIcon sx={{ color: "#fff" }} />
+              </IconButton>
+            )}
+            {!matches && value && (
+              <IconButton
+                onClick={() => {
+                  onChange("");
+                  setActive(!active);
+                }}
+              >
+                <CancelRoundedIcon sx={{ color: "#fff" }} />
+              </IconButton>
+            )}
+          </>
         ),
       }}
     />
