@@ -69,15 +69,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
 
   const data = useChunkedData(movies, chunkSize);
 
-  const [previousChunkSize, setPreviousChunkSize] = useState(chunkSize);
-
-  useEffect(() => {
-    if (previousChunkSize !== chunkSize) {
-      setSelected({ row: null, item: null });
-    }
-    setPreviousChunkSize(chunkSize);
-  }, [chunkSize, previousChunkSize]);
-
   const updateCurrentSelection = (rowIndex: number, itemIndex: number) => {
     previousClick.current = { row: rowIndex, item: itemIndex };
 
@@ -156,6 +147,11 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     }
   };
 
+  // remove detail view on broweser resize
+  useEffect(() => {
+    setSelected({ row: null, item: null });
+  }, [chunkSize]);
+
   useLayoutEffect(() => {
     const heightRefCurrent = heightRef.current;
 
@@ -198,6 +194,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
         isMobileDevice()
       ) {
         const rect = boxRef.current.getBoundingClientRect();
+        console.log(rect.top);
         const targetTop = rect.top + getScrollOffset() + 600;
         const scrollToY = targetTop - clickedPosition.y;
         smoothScroll(scrollToY);
