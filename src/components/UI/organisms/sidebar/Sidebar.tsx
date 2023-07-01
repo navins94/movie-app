@@ -24,6 +24,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -51,7 +52,9 @@ const Sidebar = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar src={UserImage} sx={{ width: 100, height: 100 }} />
+        <IconButton component={Link} to="/">
+          <Avatar src={UserImage} sx={{ width: 100, height: 100 }} />
+        </IconButton>
         <Typography
           color="textSecondary"
           fontWeight={600}

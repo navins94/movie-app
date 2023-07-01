@@ -4,6 +4,7 @@ import { colorConfigs } from "./configs/colorConfigs";
 import { CssBaseline } from "@mui/material";
 import MainLayout from "./components/Pages/MainLayout";
 import MoviesPage from "./components/Pages/MoviesPage";
+import NotFoundPage from "./components/Pages/NotFoundPage";
 
 const theme = createTheme({
   components: {
@@ -68,6 +69,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<MoviesPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
       </Router>
