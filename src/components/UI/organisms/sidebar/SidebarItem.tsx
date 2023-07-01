@@ -6,13 +6,15 @@ import { useLocation } from "react-router-dom";
 
 type Props = {
   item: RouteType;
+  onClose: () => void;
 };
 
-const SidebarItem = ({ item }: Props) => {
+const SidebarItem = ({ item, onClose }: Props) => {
   const location = useLocation();
   return item.sidebarProps && item.path ? (
     <ListItemButton
       component={Link}
+      onClick={onClose}
       to={item.path}
       sx={{
         "&: hover": {

@@ -141,7 +141,11 @@ const Sidebar = () => {
                 <List sx={{ pb: "15px", pt: "15px" }}>
                   {group.map((route, index) =>
                     route.sidebarProps ? (
-                      <SidebarItem item={route} key={index} />
+                      <SidebarItem
+                        item={route}
+                        key={index}
+                        onClose={handleDrawerToggle}
+                      />
                     ) : null
                   )}
                 </List>

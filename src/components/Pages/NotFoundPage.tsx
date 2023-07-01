@@ -11,6 +11,7 @@ const NotFoundPage: React.FC = () => {
     <Box
       sx={{
         display: "flex",
+        textAlign: "center",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
