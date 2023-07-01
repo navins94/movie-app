@@ -15,23 +15,35 @@ const useMovies = (): UseMoviesResult => {
   const location = useLocation();
   const history = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [moviesData, setMoviesData] = useState<{
+    loading: boolean;
+    error: Error | null;
+    movies: Movie[];
+  }>({
+    loading: true,
+    error: null,
+    movies: [],
+  });
+
   const [searchName, setSearchName] = useState<string>(
     () => searchParams.get("q") || ""
   );
 
   useEffect(() => {
-    setLoading(true);
     getMovies()
       .then((movies) => {
-        setMovies(movies);
-        setLoading(false);
+        setMoviesData((prevData) => ({
+          ...prevData,
+          movies: movies,
+          loading: false,
+        }));
       })
       .catch((error) => {
-        setError(error.message);
-        setLoading(false);
+        setMoviesData((prevData) => ({
+          ...prevData,
+          error: error.Message,
+          loading: false,
+        }));
       });
   }, []);
 
@@ -40,7 +52,6 @@ const useMovies = (): UseMoviesResult => {
     if (searchName !== "") {
       newSearchParams.set("q", searchName);
     }
-
     const options = {
       search: newSearchParams.toString(),
     };
@@ -49,12 +60,12 @@ const useMovies = (): UseMoviesResult => {
 
   const filteredMovies = useMemo(
     () =>
-      movies.filter((movie) =>
+      moviesData?.movies.filter((movie) =>
         searchName === ""
           ? true
           : movie?.Title?.toLowerCase().includes(searchName.toLowerCase())
       ),
-    [movies, searchName]
+    [moviesData?.movies, searchName]
   );
 
   const memoizedSetSearchName = useCallback((name: string) => {
@@ -63,8 +74,8 @@ const useMovies = (): UseMoviesResult => {
 
   return {
     movies: filteredMovies,
-    loading,
-    error,
+    loading: moviesData.loading,
+    error: moviesData.error,
     searchName,
     setSearchName: memoizedSetSearchName,
   };

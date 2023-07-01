@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Grid, IconButton } from "@mui/material";
+import { Box, Grid, IconButton, Typography } from "@mui/material";
+import MovieList from "../UI/organisms/MovieList";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { colorConfigs } from "../../configs/colorConfigs";
@@ -9,8 +10,6 @@ import useMovies from "../../hooks/useMovies";
 
 const MoviesPage: React.FC = () => {
   const { movies, loading, error, searchName, setSearchName } = useMovies();
-
-  console.log(movies);
 
   if (loading) {
     return <SpinnerComponent />;
@@ -49,6 +48,25 @@ const MoviesPage: React.FC = () => {
             </Box>
           </Grid>
         </Grid>
+      </Box>
+      <Box
+        sx={{
+          py: 4,
+          px: { xs: 0, sm: 1, md: 2 },
+          display: "flex",
+          gap: "30px",
+          flexDirection: "column",
+        }}
+      >
+        {movies.length === 0 ? (
+          <Typography variant="h6" color="textSecondary">
+            No results found for your search.
+          </Typography>
+        ) : (
+          <>
+            <MovieList movies={movies} />
+          </>
+        )}
       </Box>
     </>
   );
