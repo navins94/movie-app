@@ -10,13 +10,11 @@ export const expandHeight = keyframes`
 `;
 
 export const shrinkHeight = keyframes`
-  0% {
+from {
     height: 100%;
-    transform: scaleY(1);
   }
-  100% {
+  to {
     height: 0;
-    transform: scaleY(1);
   }
 `;
 
