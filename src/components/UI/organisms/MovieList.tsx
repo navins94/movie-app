@@ -40,7 +40,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     item: number | null;
   }>({ row: null, item: null });
 
-  const [clickedPosition, setClickedPosition] = useState<Position | null>(null);
   const [height, setHeight] = useState(0);
   const previousClick = useRef<{ row: number | null; item: number | null }>({
     row: null,
@@ -125,16 +124,11 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     }
   };
 
-  const handleClick = (
-    rowIndex: number,
-    itemIndex: number,
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleClick = (rowIndex: number, itemIndex: number) => {
     if (isNewSelection(rowIndex, itemIndex)) {
       prepareForNewSelection();
     } else {
       handleSameSelection();
-      setClickedPosition({ x: event.clientX, y: event.clientY });
     }
 
     updateCurrentSelection(rowIndex, itemIndex);
@@ -256,7 +250,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
                         : "0px",
                     borderRadius: "11px",
                   }}
-                  onClick={(e) => handleClick(rowIndex, itemIndex, e)}
+                  onClick={() => handleClick(rowIndex, itemIndex)}
                 >
                   <MovieItem key={movie.Title} movie={movie} />
                 </CardActionArea>
