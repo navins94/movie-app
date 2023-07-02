@@ -84,6 +84,7 @@ const Sidebar = () => {
           sx={{
             py: { xs: 1, lg: 4 },
             px: { lg: 6 },
+            gap: "6px",
           }}
         >
           <IconButton
@@ -100,6 +101,7 @@ const Sidebar = () => {
             alignItems="center"
             sx={{
               width: "100%",
+              gap: "6px",
               justifyContent: { xs: "flex-end", lg: "space-between" },
             }}
           >
