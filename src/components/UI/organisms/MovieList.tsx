@@ -176,7 +176,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
 
       const rect = boxRef.current.getBoundingClientRect();
       const targetTop =
-        rect.top + getScrollOffset() - (isMobileDevice() ? 50 : 200);
+        rect.top + getScrollOffset() - (isMobileDevice() ? 100 : 200);
       smoothScroll(targetTop);
     };
 
@@ -184,27 +184,6 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
       scrollToBox();
     }
   }, [selected.row]);
-
-  useEffect(() => {
-    const scrollToClickedPosition = () => {
-      if (
-        clickedPosition &&
-        boxRef.current &&
-        animation.shrink &&
-        isMobileDevice()
-      ) {
-        const rect = boxRef.current.getBoundingClientRect();
-        const targetTop = rect.top + getScrollOffset() + 600;
-        const scrollToY = targetTop - clickedPosition.y;
-        smoothScroll(scrollToY);
-        setClickedPosition(null);
-      }
-    };
-
-    if (clickedPosition) {
-      scrollToClickedPosition();
-    }
-  }, [clickedPosition]);
 
   return (
     <>
