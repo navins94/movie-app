@@ -50,18 +50,9 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   const isMd = useMediaQuery("(max-width:1199px)");
   const isLg = useMediaQuery("(min-width:1200px)");
 
-  const chunkSize = useMemo(() => {
-    let chunkSize = 5;
-    if (isXs || isSm) {
-      chunkSize = 2;
-    } else if (isMd && !isLg) {
-      chunkSize = 3;
-    }
+  const chunkSize = isXs || isSm ? 2 : isMd && !isLg ? 3 : 5;
 
-    return chunkSize;
-  }, [isXs, isSm, isMd, isLg]);
-
-  const data = useChunkedData(movies, chunkSize);
+  const chunkedMovies = useChunkedData(movies, chunkSize);
 
   const updateCurrentSelection = (rowIndex: number, itemIndex: number) => {
     previousClick.current = { row: rowIndex, item: itemIndex };
@@ -141,12 +132,11 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     setSelected({ row: null, item: null });
   }, [chunkSize]);
 
+  // get height synchronosly
   useLayoutEffect(() => {
-    const heightRefCurrent = heightRef.current;
-
     const updateHeight = () => {
-      if (heightRefCurrent) {
-        setHeight(heightRefCurrent.offsetHeight);
+      if (heightRef.current) {
+        setHeight(heightRef.current.offsetHeight);
       }
     };
 
@@ -176,7 +166,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
 
   return (
     <>
-      {data?.map((movies, rowIndex) => (
+      {chunkedMovies?.map((movies, rowIndex) => (
         <Box key={rowIndex}>
           {selected.row === rowIndex && selected.item !== null && (
             <Box
@@ -208,7 +198,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
                 >
                   <Box ref={heightRef}>
                     <MovieDetailCard
-                      movie={data[rowIndex][selected.item]}
+                      movie={chunkedMovies[rowIndex][selected.item]}
                       animate={animation.showContent}
                     />
                   </Box>
@@ -232,7 +222,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
                 md={4}
                 lg={12 / 5}
                 xl={12 / 5}
-                key={movie.Title}
+                key={`${rowIndex}-${itemIndex}-${movie.Title}`}
               >
                 <CardActionArea
                   sx={{
