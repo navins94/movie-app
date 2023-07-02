@@ -1,11 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, {
-  useState,
-  useLayoutEffect,
-  useRef,
-  useMemo,
-  useEffect,
-} from "react";
+import React, { useState, useLayoutEffect, useRef, useEffect } from "react";
 import { Box, CardActionArea, Grid } from "@mui/material";
 import useChunkedData from "../../../hooks/useChunkedData";
 import { Movie } from "../../../types";
