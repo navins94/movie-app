@@ -24,11 +24,6 @@ interface MovieListProps {
   movies: Movie[];
 }
 
-interface Position {
-  x: number;
-  y: number;
-}
-
 const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   const [animation, setAnimation] = useState({
     animate: false,
