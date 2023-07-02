@@ -25,15 +25,16 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
+import Search from "../../molecules/SearchBar";
+import { useMoviesContext } from "../../../../context/MoviesContext";
 
 const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const { searchName, setSearchName } = useMoviesContext();
   const theme = useTheme();
   const isDesktopView = useMediaQuery(theme.breakpoints.up("lg"));
 
   const drawerVariant = isDesktopView ? "permanent" : "temporary";
-  const drawerDisplay = isDesktopView ? "none" : "block";
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -72,19 +73,17 @@ const Sidebar = () => {
       <CssBaseline />
       <AppBar
         sx={{
-          display: drawerDisplay,
-          position: "fixed",
+          width: { lg: `calc(100% - ${sizeConfigs.sidebar.width})` },
+          ml: { lg: `${sizeConfigs.sidebar.width}` },
+          position: { sm: "fixed", lg: "absolute" },
           background: "#273244",
         }}
         elevation={0}
       >
         <Toolbar
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            p: 0,
-            pl: 2,
+            py: { xs: 1, lg: 4 },
+            px: { lg: 6 },
           }}
         >
           <IconButton
@@ -92,21 +91,40 @@ const Sidebar = () => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2 }}
+            sx={{ display: { lg: "none" } }}
           >
             <MenuIcon />
           </IconButton>
-          <Box display="flex" alignItems="center" justifyContent="flex-end">
-            <IconButton>
-              <LightModeOutlinedIcon
-                sx={{ color: colorConfigs.secondaryText, fontSize: 23 }}
-              />
-            </IconButton>
-            <IconButton sx={{ p: 0 }}>
-              <MoreVertIcon
-                sx={{ color: colorConfigs.secondaryText, fontSize: 32 }}
-              />
-            </IconButton>
+          <Box
+            display="flex"
+            alignItems="center"
+            sx={{
+              width: "100%",
+              justifyContent: { xs: "flex-end", lg: "space-between" },
+            }}
+          >
+            <Search
+              value={searchName}
+              onChange={setSearchName}
+              width={isDesktopView ? "50%" : "100%"}
+            />
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+              sx={{ mr: { xs: "-5px" } }}
+            >
+              <IconButton>
+                <LightModeOutlinedIcon
+                  sx={{ color: colorConfigs.secondaryText, fontSize: 23 }}
+                />
+              </IconButton>
+              <IconButton sx={{ p: 0 }}>
+                <MoreVertIcon
+                  sx={{ color: colorConfigs.secondaryText, fontSize: 32 }}
+                />
+              </IconButton>
+            </Box>
           </Box>
         </Toolbar>
       </AppBar>

@@ -5,6 +5,7 @@ import { CssBaseline } from "@mui/material";
 import MainLayout from "./components/Pages/MainLayout";
 import MoviesPage from "./components/Pages/MoviesPage";
 import NotFoundPage from "./components/Pages/NotFoundPage";
+import { MoviesProvider } from "./context/MoviesContext";
 
 const theme = createTheme({
   components: {
@@ -66,12 +67,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<MoviesPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
+        <MoviesProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<MoviesPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </MoviesProvider>
       </Router>
     </ThemeProvider>
   );

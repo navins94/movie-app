@@ -18,6 +18,25 @@ from {
   }
 `;
 
+export const expandWidth = keyframes`
+  0% {
+    width: 2.5rem;
+  }
+  100% {
+    width: var(--text-field-width, 100%);
+    background-color: #1A2536; 
+  }
+`;
+
+export const shrinkWidth = keyframes`
+  0% {
+    width: var(--text-field-width, 100%);
+  }
+  100% {
+    width: 2.5rem;
+  }
+`;
+
 export const fadeIn = keyframes`
   from {
     opacity: 0;

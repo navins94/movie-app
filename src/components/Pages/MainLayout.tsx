@@ -13,10 +13,10 @@ const MainLayout = () => {
       <Box
         component="main"
         sx={{
-          marginTop: { xs: "56px", sm: "64px", md: "64px", lg: "0px" },
+          marginTop: { xs: "59px", lg: "120px" },
           flexGrow: 1,
-          pt: 0,
-          p: { xs: 2, md: 4, lg: 4 },
+          pt: { xs: 2, lg: 0 },
+          px: { xs: 2, lg: 4 },
           width: `calc(100% - ${sizeConfigs.sidebar.width})`,
           minHeight: "100vh",
           backgroundColor: colorConfigs.mainBg,

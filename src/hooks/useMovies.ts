@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import getMovies from "../api/get-movies";
 import { Movie } from "../types";
 
-interface UseMoviesResult {
+export interface UseMoviesResult {
   movies: Movie[];
   loading: boolean;
   error: Error | null;
