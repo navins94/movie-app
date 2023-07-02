@@ -44,7 +44,7 @@ const MovieDetailCard: React.FC<MovieItemProps> = ({ movie, animate }) => {
       }}
     >
       <ImageCarousel images={images} />
-      <Content animate={animate} animation="slideUp" delay={0.3}>
+      <Content animate={animate} animation="slideUp">
         <Box
           sx={{
             display: "flex",

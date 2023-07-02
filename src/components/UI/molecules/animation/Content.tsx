@@ -8,7 +8,7 @@ type AnimationType = "slideUp" | "fadeIn";
 interface ContentProps {
   animate: boolean;
   animation: AnimationType;
-  delay: number;
+  delay?: number;
   children: React.ReactNode;
 }
 
@@ -26,7 +26,7 @@ const getContentAnimation = (animation: AnimationType): SerializedStyles => {
 const Content: React.FC<ContentProps> = ({
   animate,
   animation,
-  delay,
+  delay = 0,
   children,
 }) => {
   const animationToUse = getContentAnimation(animation);

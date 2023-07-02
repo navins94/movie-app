@@ -172,7 +172,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
     if (selected.row !== null) {
       scrollToBox();
     }
-  }, [selected.row]);
+  }, [selected.row, animation.shrink]);
 
   return (
     <>
@@ -186,8 +186,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                transition:
-                  selected.row === rowIndex ? "1s ease-out" : "0.6s ease-in",
+                transition: "1s ease-out",
                 transitionDelay: animation.shrink ? "0.8s" : "0s",
                 marginBottom: animation.shrink ? "0px" : "40px",
                 position: "relative",
