@@ -43,6 +43,9 @@ const theme = createTheme({
     },
   },
   palette: {
+    background: {
+      default: "#273244",
+    },
     text: {
       primary: colorConfigs.primaryText,
       secondary: colorConfigs.secondaryText,
