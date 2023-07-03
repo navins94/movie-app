@@ -60,12 +60,22 @@ const useMovies = (): UseMoviesResult => {
 
   const filteredMovies = useMemo(
     () =>
-      moviesData?.movies.filter((movie) =>
-        searchName === ""
-          ? true
-          : movie?.Title?.toLowerCase().includes(searchName.toLowerCase())
-      ),
-    [moviesData?.movies, searchName]
+      moviesData.movies.filter((movie) => {
+        const titleMatch =
+          searchName === "" ||
+          movie?.Title?.toLowerCase().includes(searchName.toLowerCase());
+
+        const keywordsMatch =
+          searchName === "" ||
+          Object.values(movie).some((value) =>
+            typeof value === "string"
+              ? value.toLowerCase().includes(searchName.toLowerCase())
+              : false
+          );
+
+        return titleMatch || keywordsMatch;
+      }),
+    [moviesData.movies, searchName]
   );
 
   const memoizedSetSearchName = useCallback((name: string) => {
