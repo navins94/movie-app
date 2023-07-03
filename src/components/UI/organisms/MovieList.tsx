@@ -84,7 +84,9 @@ const MovieList: React.FC<MovieListProps> = ({ movies, searchValue }) => {
       shrink: false,
       showContent: false,
     }));
-    setHeight(heightRef.current?.offsetHeight || 0);
+    requestAnimationFrame(() => {
+      setHeight(heightRef.current?.offsetHeight || 0);
+    });
   };
 
   const collapseSelection = () => {
@@ -94,7 +96,9 @@ const MovieList: React.FC<MovieListProps> = ({ movies, searchValue }) => {
       shrink: true,
       showContent: false,
     }));
-    setHeight(0);
+    requestAnimationFrame(() => {
+      setHeight(0);
+    });
   };
 
   const handleSameSelection = () => {
@@ -167,6 +171,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies, searchValue }) => {
             <Box
               ref={boxRef}
               sx={{
+                willChange: "height",
                 height: animation.shrink ? "0px" : `${height}px`,
                 display: "flex",
                 alignItems: "center",
