@@ -126,7 +126,10 @@ const Search: React.FC<SearchProps> = ({ value, onChange, width }) => {
               {expand && (
                 <CancelRoundedIcon
                   sx={{ color: "#fff", cursor: "pointer" }}
-                  onClick={handleSearchClick}
+                  onClick={() => {
+                    onChange("");
+                    handleSearchClick();
+                  }}
                   css={css`
                     opacity: 0;
                     animation: ${fadeIn} 0.5s ease-in-out 1s forwards;
