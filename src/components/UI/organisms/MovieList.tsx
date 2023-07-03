@@ -16,9 +16,10 @@ import {
 
 interface MovieListProps {
   movies: Movie[];
+  searchValue?: string;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ movies }) => {
+const MovieList: React.FC<MovieListProps> = ({ movies, searchValue }) => {
   const [animation, setAnimation] = useState({
     animate: false,
     shrink: false,
@@ -124,7 +125,7 @@ const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   // remove detail view on broweser resize
   useEffect(() => {
     setSelected({ row: null, item: null });
-  }, [chunkSize]);
+  }, [chunkSize, searchValue]);
 
   // get height synchronosly
   useLayoutEffect(() => {

@@ -5,7 +5,7 @@ import SpinnerComponent from "../UI/atoms/Spinner";
 import { useMoviesContext } from "../../context/MoviesContext";
 
 const MoviesPage: React.FC = () => {
-  const { movies, loading, error } = useMoviesContext();
+  const { movies, loading, error, searchName } = useMoviesContext();
 
   if (loading) {
     return <SpinnerComponent />;
@@ -32,7 +32,7 @@ const MoviesPage: React.FC = () => {
           </Typography>
         ) : (
           <>
-            <MovieList movies={movies} />
+            <MovieList movies={movies} searchValue={searchName} />
           </>
         )}
       </Box>
