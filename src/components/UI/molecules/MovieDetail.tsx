@@ -109,6 +109,7 @@ const MovieDetailCard: React.FC<MovieItemProps> = ({ movie, animate }) => {
                     textTransform: "capitalize",
                     fontSize: 16,
                     width: { xs: "100%", md: "10em" },
+                    boxShadow: 0,
                   }}
                 >
                   Play Movie
