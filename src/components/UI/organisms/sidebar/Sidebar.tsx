@@ -53,8 +53,12 @@ const Sidebar = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <IconButton component={Link} to="/">
-          <Avatar src={UserImage} sx={{ width: 100, height: 100 }} />
+        <IconButton component={Link} to="/" aria-label="Movie app">
+          <Avatar
+            src={UserImage}
+            sx={{ width: 100, height: 100 }}
+            alt="profile image"
+          />
         </IconButton>
         <Typography
           color="textSecondary"
@@ -116,12 +120,12 @@ const Sidebar = () => {
               justifyContent="flex-end"
               sx={{ mr: { xs: "-5px" } }}
             >
-              <IconButton>
+              <IconButton aria-label="theme mode">
                 <LightModeOutlinedIcon
                   sx={{ color: colorConfigs.secondaryText, fontSize: 23 }}
                 />
               </IconButton>
-              <IconButton sx={{ p: 0 }}>
+              <IconButton sx={{ p: 0 }} aria-label="more option">
                 <MoreVertIcon
                   sx={{ color: colorConfigs.secondaryText, fontSize: 32 }}
                 />
