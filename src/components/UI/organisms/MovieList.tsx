@@ -220,18 +220,18 @@ const MovieList: React.FC<MovieListProps> = ({ movies, searchValue }) => {
                 key={`${rowIndex}-${itemIndex}-${movie.Title}`}
               >
                 <CardActionArea
-                  sx={{
-                    border:
+                  sx={{ borderRadius: "11px" }}
+                  onClick={() => handleClick(rowIndex, itemIndex)}
+                >
+                  <MovieItem
+                    key={movie.Title}
+                    movie={movie}
+                    selected={
                       selected.item === itemIndex &&
                       selected.row === rowIndex &&
                       !animation.shrink
-                        ? "3px solid #00E0FF"
-                        : "0px",
-                    borderRadius: "11px",
-                  }}
-                  onClick={() => handleClick(rowIndex, itemIndex)}
-                >
-                  <MovieItem key={movie.Title} movie={movie} />
+                    }
+                  />
                 </CardActionArea>
               </Grid>
             ))}

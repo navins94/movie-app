@@ -7,12 +7,20 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 
 interface MovieItemProps {
   movie: Movie;
+  selected?: boolean;
 }
 
-const MovieItem: React.FC<MovieItemProps> = ({ movie }) => {
+const MovieItem: React.FC<MovieItemProps> = ({ movie, selected }) => {
   return (
     <Card
-      sx={{ p: 1, background: colorConfigs.cardBg, borderRadius: "11px" }}
+      sx={{
+        p: "6px",
+        background: colorConfigs.cardBg,
+        borderRadius: "11px",
+        border: selected
+          ? "3px solid #00E0FF"
+          : `3px solid ${colorConfigs.cardBg}`,
+      }}
       elevation={0}
     >
       <Box sx={{ borderRadius: "6px", overflow: "hidden" }}>
