@@ -1,7 +1,7 @@
 import React from "react";
 import { Movie } from "../../../types";
 import { Box, Typography, Card, CardContent, CardMedia } from "@mui/material";
-import { colorConfigs } from "../../../configs/colorConfigs";
+import { useTheme } from "@mui/material/styles";
 import PlayCircleFilledWhiteOutlinedIcon from "@mui/icons-material/PlayCircleFilledWhiteOutlined";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
@@ -11,15 +11,16 @@ interface MovieItemProps {
 }
 
 const MovieItem: React.FC<MovieItemProps> = ({ movie, selected }) => {
+  const theme = useTheme();
   return (
     <Card
       sx={{
         p: "6px",
-        background: colorConfigs.secondary,
+        background: theme.palette.secondary.main,
         borderRadius: "11px",
         border: selected
-          ? `3px solid ${colorConfigs.info}`
-          : `3px solid ${colorConfigs.secondary}`,
+          ? `3px solid ${theme.palette.info.main}`
+          : `3px solid ${theme.palette.secondary.main}`,
       }}
       elevation={0}
     >
@@ -52,10 +53,10 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, selected }) => {
           </Typography>
           <Box sx={{ display: "flex", columnGap: "8px" }}>
             <PlayCircleFilledWhiteOutlinedIcon
-              sx={{ color: colorConfigs.secondaryText }}
+              sx={{ color: theme.palette.text.secondary }}
             />
             <AddCircleOutlineOutlinedIcon
-              sx={{ color: colorConfigs.secondaryText }}
+              sx={{ color: theme.palette.text.secondary }}
             />
           </Box>
         </Box>

@@ -1,8 +1,7 @@
 import { ListItemButton, ListItemIcon } from "@mui/material";
-import { Link } from "react-router-dom";
-import { colorConfigs } from "../../../../configs/colorConfigs";
+import { useTheme } from "@mui/material/styles";
 import { RouteType } from "../../../../routes/config";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 type Props = {
   item: RouteType;
@@ -10,6 +9,7 @@ type Props = {
 };
 
 const SidebarItem = ({ item, onClose }: Props) => {
+  const theme = useTheme();
   const location = useLocation();
   return item.sidebarProps && item.path ? (
     <ListItemButton
@@ -18,21 +18,21 @@ const SidebarItem = ({ item, onClose }: Props) => {
       to={item.path}
       sx={{
         "&: hover": {
-          backgroundColor: colorConfigs.sidebar.hoverBg,
+          backgroundColor: theme.palette.secondary.main,
         },
         "&.Mui-selected": {
-          borderRight: `3px solid ${colorConfigs.info}`,
-          color: colorConfigs.info,
+          borderRight: `3px solid ${theme.palette.info.main}`,
+          color: theme.palette.info.main,
           "& .MuiSvgIcon-root": {
-            color: colorConfigs.info,
+            color: theme.palette.info.main,
           },
         },
         "& .MuiSvgIcon-root": {
-          color: colorConfigs.secondaryText,
+          color: theme.palette.text.secondary,
         },
         paddingY: "6px",
         paddingX: "40px",
-        color: colorConfigs.secondaryText,
+        color: theme.palette.text.secondary,
         fontWeight: 600,
         fontSize: { md: 15, xs: 14 },
       }}

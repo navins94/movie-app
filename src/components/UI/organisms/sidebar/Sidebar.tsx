@@ -12,21 +12,18 @@ import {
   CssBaseline,
   Box,
 } from "@mui/material";
-import { colorConfigs } from "../../../../configs/colorConfigs";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import sizeConfigs from "../../../../configs/sizeConfigs";
 import appRoutes from "../../../../routes/appRoutes";
 import SidebarItem from "./SidebarItem";
 import UserImage from "../../../../assets/profile.svg";
 import MenuIcon from "@mui/icons-material/Menu";
-
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Link } from "react-router-dom";
 import Search from "../../molecules/SearchBar";
 import { useMoviesContext } from "../../../../context/MoviesContext";
+import ThemeSwitch from "../../../../context/ThemeContext/ThemeSwitch";
 
 const Sidebar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -80,7 +77,7 @@ const Sidebar = () => {
           width: { lg: `calc(100% - ${sizeConfigs.sidebar.width})` },
           ml: { lg: `${sizeConfigs.sidebar.width}` },
           position: { sm: "fixed", lg: "absolute" },
-          background: "#273244",
+          background: theme.palette.background.default,
         }}
         elevation={0}
       >
@@ -120,14 +117,10 @@ const Sidebar = () => {
               justifyContent="flex-end"
               sx={{ mr: { xs: "-5px" } }}
             >
-              <IconButton aria-label="theme mode">
-                <LightModeOutlinedIcon
-                  sx={{ color: colorConfigs.secondaryText, fontSize: 23 }}
-                />
-              </IconButton>
+              <ThemeSwitch />
               <IconButton sx={{ p: 0 }} aria-label="more option">
                 <MoreVertIcon
-                  sx={{ color: colorConfigs.secondaryText, fontSize: 32 }}
+                  sx={{ color: theme.palette.text.secondary, fontSize: 32 }}
                 />
               </IconButton>
             </Box>
@@ -152,7 +145,7 @@ const Sidebar = () => {
               width: sizeConfigs.sidebar.width,
               boxSizing: "border-box",
               borderRight: "0px",
-              backgroundColor: colorConfigs.primary,
+              backgroundColor: theme.palette.primary.main,
               padding: "40px 0px",
             },
           }}

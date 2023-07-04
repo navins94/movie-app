@@ -3,7 +3,6 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
-import { colorConfigs } from "../../../configs/colorConfigs";
 import { Box, Typography } from "@mui/material";
 
 interface RatingProgressBarProps {
@@ -12,15 +11,15 @@ interface RatingProgressBarProps {
   animate: boolean;
 }
 
-const BorderLinearProgress = styled(LinearProgress)(() => ({
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 5,
   [`&.${linearProgressClasses.colorPrimary}`]: {
-    backgroundColor: colorConfigs.mainBg,
+    backgroundColor: theme.palette.background.default,
   },
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 5,
-    backgroundColor: colorConfigs.info,
+    backgroundColor: theme.palette.info.main,
   },
 }));
 

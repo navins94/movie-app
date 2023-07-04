@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { colorConfigs } from "../../configs/colorConfigs";
+import { useTheme } from "@mui/material/styles";
 import sizeConfigs from "../../configs/sizeConfigs";
 import Sidebar from "../UI/organisms/sidebar/Sidebar";
 import { Box } from "@mui/material";
 
 const MainLayout = () => {
+  const theme = useTheme();
   return (
     <Box sx={{ display: "flex" }}>
       <Box>
@@ -19,7 +20,7 @@ const MainLayout = () => {
           px: { xs: 2, lg: 4 },
           width: `calc(100% - ${sizeConfigs.sidebar.width})`,
           minHeight: "100vh",
-          backgroundColor: colorConfigs.mainBg,
+          backgroundColor: theme.palette.background.default,
         }}
       >
         <Outlet />
