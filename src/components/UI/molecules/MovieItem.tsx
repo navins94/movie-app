@@ -18,7 +18,7 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, selected }) => {
         background: colorConfigs.cardBg,
         borderRadius: "11px",
         border: selected
-          ? "3px solid #00E0FF"
+          ? `3px solid ${colorConfigs.info}`
           : `3px solid ${colorConfigs.cardBg}`,
       }}
       elevation={0}

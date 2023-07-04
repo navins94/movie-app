@@ -152,8 +152,7 @@ const Sidebar = () => {
               width: sizeConfigs.sidebar.width,
               boxSizing: "border-box",
               borderRight: "0px",
-              backgroundColor: colorConfigs.sidebar.bg,
-              color: colorConfigs.sidebar.color,
+              backgroundColor: colorConfigs.primary,
               padding: "40px 0px",
             },
           }}

@@ -45,13 +45,13 @@ const theme = createTheme({
       secondary: colorConfigs.secondaryText,
     },
     primary: {
-      main: "#1F2A3C",
+      main: colorConfigs.primary,
     },
     secondary: {
-      main: "#394B61",
+      main: colorConfigs.secondary,
     },
     info: {
-      main: "#00E0FF",
+      main: colorConfigs.info,
     },
   },
   typography: {

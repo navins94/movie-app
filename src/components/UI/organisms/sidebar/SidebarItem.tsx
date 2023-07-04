@@ -21,10 +21,10 @@ const SidebarItem = ({ item, onClose }: Props) => {
           backgroundColor: colorConfigs.sidebar.hoverBg,
         },
         "&.Mui-selected": {
-          borderRight: "3px solid #00E0FF",
-          color: "#00E0FF",
+          borderRight: `3px solid ${colorConfigs.info}`,
+          color: colorConfigs.info,
           "& .MuiSvgIcon-root": {
-            color: "#00E0FF",
+            color: colorConfigs.info,
           },
         },
         "& .MuiSvgIcon-root": {
