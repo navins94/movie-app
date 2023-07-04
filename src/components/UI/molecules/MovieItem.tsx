@@ -15,11 +15,11 @@ const MovieItem: React.FC<MovieItemProps> = ({ movie, selected }) => {
     <Card
       sx={{
         p: "6px",
-        background: colorConfigs.cardBg,
+        background: colorConfigs.secondary,
         borderRadius: "11px",
         border: selected
           ? `3px solid ${colorConfigs.info}`
-          : `3px solid ${colorConfigs.cardBg}`,
+          : `3px solid ${colorConfigs.secondary}`,
       }}
       elevation={0}
     >

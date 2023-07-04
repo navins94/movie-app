@@ -6,31 +6,31 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         body: {
-          scrollbarColor: colorConfigs.cardBg,
+          scrollbarColor: colorConfigs.secondary,
           "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
             backgroundColor: "#273244",
             width: "9px",
           },
           "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
             borderRadius: 8,
-            backgroundColor: colorConfigs.cardBg,
+            backgroundColor: colorConfigs.secondary,
             minHeight: 24,
-            border: `2px solid ${colorConfigs.cardBg}`,
+            border: `2px solid ${colorConfigs.secondary}`,
           },
           "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
             {
-              backgroundColor: colorConfigs.cardBg,
+              backgroundColor: colorConfigs.secondary,
             },
           "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
             {
-              backgroundColor: colorConfigs.cardBg,
+              backgroundColor: colorConfigs.secondary,
             },
           "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
             {
-              backgroundColor: colorConfigs.cardBg,
+              backgroundColor: colorConfigs.secondary,
             },
           "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-            backgroundColor: colorConfigs.cardBg,
+            backgroundColor: colorConfigs.secondary,
           },
         },
       },
